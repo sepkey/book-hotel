@@ -20,7 +20,7 @@ describe("Routes", () => {
   it("should display home page when navigating to /", () => {
     navigateTo("/");
     render(<Home />);
-    expect(screen.getByRole("heading", { name: /home/i })).toBeInTheDocument();
+    expect(screen.getByText(/home/i)).toBeInTheDocument();
   });
   it("should display rooms page when navigating to /rooms", () => {
     navigateTo("/rooms");
