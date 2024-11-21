@@ -10,11 +10,11 @@ export const metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
-      <header>
-        <Logo />
-        <Navigation />
-      </header>
       <body>
+        <header>
+          <Logo />
+          <Navigation />
+        </header>
         <main>{children}</main>
         <footer>Copyright by Septel</footer>
       </body>
