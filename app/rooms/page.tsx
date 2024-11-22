@@ -1,4 +1,6 @@
-export type User = { id: string; name: string };
+export const metadata = {
+  title: "rooms",
+};
 
 export default function Page() {
   return <div>rooms</div>;
