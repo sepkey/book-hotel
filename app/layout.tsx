@@ -1,6 +1,7 @@
+import Logo from "@/_components/Logo";
+import Navigation from "@/_components/Navigation";
+import "@/_styles/globals.css";
 import { PropsWithChildren } from "react";
-import Logo from "./_components/Logo";
-import Navigation from "./_components/Navigation";
 
 export const metadata = {
   title: "Septel",
@@ -10,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-accent-50 text-neutral-800 min-h-screen">
         <header>
           <Logo />
           <Navigation />
