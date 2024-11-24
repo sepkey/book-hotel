@@ -7,6 +7,7 @@ export type Room = {
   image: string;
 };
 
+
 export type Booking = {
   id: string;
   guestId: string;
@@ -19,3 +20,4 @@ export type Booking = {
   created_at: Date;
   rooms: Pick<Room, "image" | "name">;
 };
+
