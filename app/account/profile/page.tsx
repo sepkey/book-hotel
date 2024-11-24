@@ -1,5 +1,9 @@
 import SelectCountry from "@/_components/SeleceCountry";
 
+export const metadata = {
+  title: "profile",
+};
+
 export default function Page() {
   // CHANGE
   const countryFlag = "pt.jpg";
