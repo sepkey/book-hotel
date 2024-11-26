@@ -46,9 +46,15 @@ export async function PUT(request: NextRequest, { params }: Props) {
   return NextResponse.json(updatedRoom);
 }
 
-export function DELETE(request: NextRequest, { params }: Props) {
-  if (!params.id)
+export async function DELETE(request: NextRequest, { params }: Props) {
+  const room = await prisma.room.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+
+  if (!room)
     return NextResponse.json({ error: "The room not found." }, { status: 404 });
+
+  await prisma.room.delete({ where: { id: parseInt(params.id) } });
 
   return NextResponse.json({});
 }
