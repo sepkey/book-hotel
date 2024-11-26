@@ -14,11 +14,11 @@ export async function POST(request: NextRequest) {
   const validation = schema.safeParse(body);
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
+  const newRoom = await prisma.room.create({
+    data: {
+      name: body.name,
+    },
+  });
 
-  if (!body.name)
-    return NextResponse.json(
-      { error: "The room must have name." },
-      { status: 404 }
-    );
-  return NextResponse.json({ id: 3, ...body });
+  return NextResponse.json(newRoom, { status: 201 });
 }
