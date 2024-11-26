@@ -12,7 +12,7 @@ export async function GET(request: NextRequest, { params }: Props) {
     where: { id: parseInt(params.id) },
   });
   if (!room)
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
+    return NextResponse.json({ error: "Room not found" }, { status: 404 });
   return NextResponse.json(room);
 }
 
@@ -21,10 +21,29 @@ export async function PUT(request: NextRequest, { params }: Props) {
   const validation = schema.safeParse(body);
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
-  if (!params.id)
-    return NextResponse.json({ error: "The room not found." }, { status: 404 });
 
-  return NextResponse.json({ id: 3, ...body });
+  const room = await prisma.room.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+
+  if (!room)
+    return NextResponse.json({ error: "Room not found" }, { status: 404 });
+
+  const updatedRoom = await prisma.room.update({
+    where: { id: room.id },
+    data: {
+      name: body.name,
+      bookings: body.bookings,
+      created_at: body.created_at,
+      description: body.description,
+      discount: body.discount,
+      image: body.image,
+      maxCapacity: body.maxCapacity,
+      requlaarPrice: body.requlaarPrice,
+    },
+  });
+
+  return NextResponse.json(updatedRoom);
 }
 
 export function DELETE(request: NextRequest, { params }: Props) {
