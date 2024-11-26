@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import schema from "../schema";
 
@@ -6,17 +7,13 @@ type Props = {
   params: { id: string };
 };
 
-export function GET(request: NextRequest, { params }: Props) {
-  return NextResponse.json({
-    id: 1,
-    created_at: "2024-11-25 16:01:22.9547+00",
-    name: "room_1",
-    maxCapacity: 3,
-    regularPrice: 1000,
-    discount: 60,
-    description: "sea side",
-    image: "",
+export async function GET(request: NextRequest, { params }: Props) {
+  const room = await prisma.room.findUnique({
+    where: { id: parseInt(params.id) },
   });
+  if (!room)
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  return NextResponse.json(room);
 }
 
 export async function PUT(request: NextRequest, { params }: Props) {

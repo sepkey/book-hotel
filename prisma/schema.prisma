@@ -8,15 +8,15 @@ datasource db {
 }
 
 model Room {
-  id            Int       @id @default(autoincrement())
-  created_at    DateTime  @default(now())
-  name          String    @unique
-  maxCapacity   Int?
-  requlaarPrice Float?
-  discount      Int?
-  description   String?
-  image         String?
-  bookings      Booking[]
+  id           Int       @id @default(autoincrement())
+  created_at   DateTime  @default(now())
+  name         String    @unique
+  maxCapacity  Int?      @default(1)
+  reqularPrice Float?    @default(0)
+  discount     Int?      @default(0)
+  description  String?   @default("")
+  image        String?   @default("")
+  bookings     Booking[]
 }
 
 model Setting {
