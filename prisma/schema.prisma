@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Room {
+  id            Int       @id @default(autoincrement())
+  created_at    DateTime  @default(now())
+  name          String    @unique
+  maxCapacity   Int?
+  requlaarPrice Float?
+  discount      Int?
+  description   String?
+  image         String?
+  bookings      Booking[]
+}
+
+model Setting {
+  id                  Int      @id @default(autoincrement())
+  created_at          DateTime @default(now())
+  minbookingLength    Int
+  maxBookingLength    Int
+  maxGuestsPerBooking Int
+  breakfastPrice      Int
+}
+
+model Guest {
+  id          Int       @id @default(autoincrement())
+  created_at  DateTime  @default(now())
+  fullName    String
+  email       String    @unique
+  nationalID  String    @unique
+  nationality String
+  countryFlag String
+  bookings    Booking[]
+}
+
+enum Status {
+  UNCONFIRMED
+  CONFIRMED
+}
+
+model Booking {
+  id           Int      @id @default(autoincrement())
+  created_at   DateTime @default(now())
+  startDate    DateTime
+  endTime      DateTime
+  numNights    Int
+  numGusts     Int
+  roomPrice    Int
+  exterasPrice Int
+  totalPrice   Int
+  status       Status
+  hasbreakfast Boolean
+  isPaid       Boolean
+  observations String?
+  roomId       Int
+  room         Room     @relation(fields: [roomId], references: [id])
+  guestId      Int
+  guest        Guest    @relation(fields: [guestId], references: [id])
+}
