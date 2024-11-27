@@ -1,6 +1,8 @@
 import { z } from "zod";
 
 const schema = z.object({
+  id: z.number(),
+  created_at: z.date(),
   name: z.string().min(1),
   maxCapacity: z.number().int().positive().optional(),
   regularPrice: z.number().positive().optional(),
