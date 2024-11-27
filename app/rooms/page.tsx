@@ -1,13 +1,16 @@
 import RoomCard from "@/_components/RoomCard";
-import type { Room } from "@/_types/index";
+import { Room } from "../_types";
 
 export const metadata = {
   title: "rooms",
 };
 
-export default function Page() {
+export default async function Page() {
   // CHANGE
-  const rooms: Room[] = [];
+  const res = await fetch("http://localhost:3000/api/rooms", {
+    cache: "no-cache",
+  });
+  const rooms = (await res.json()) as Room[];
 
   return (
     <div>

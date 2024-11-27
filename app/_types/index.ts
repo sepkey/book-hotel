@@ -1,12 +1,7 @@
-export type Room = {
-  id: string;
-  name: string;
-  maxCapacity: number;
-  regularPrice: number;
-  discount: number;
-  image: string;
-};
+import { z } from "zod";
+import roomSchema from "../api/rooms/schema";
 
+export type Room = z.infer<typeof roomSchema>;
 
 export type Booking = {
   id: string;
@@ -20,4 +15,3 @@ export type Booking = {
   created_at: Date;
   rooms: Pick<Room, "image" | "name">;
 };
-

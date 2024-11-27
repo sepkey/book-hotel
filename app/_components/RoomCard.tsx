@@ -2,39 +2,37 @@ import { Room } from "@/_types/index";
 import { UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
-type Props = {
-  room: Room;
-};
+type Props = { room: Room };
 
 function RoomCard({ room }: Props) {
   const { id, name, maxCapacity, regularPrice, discount, image } = room;
 
   return (
-    <div className="flex border-primary-800 border">
+    <div className="flex border-primary-400 border">
       <Image
-        src={image}
+        src={image || ""}
         alt={`Room ${name}`}
         className="flex-1 border-r border-primary-800"
       />
 
       <div className="flex-grow">
-        <div className="pt-5 pb-4 px-7 bg-primary-950">
+        <div className="pt-5 pb-4 px-7 ">
           <h3 className="text-accent-500 font-semibold text-2xl mb-3">
             Room {name}
           </h3>
 
           <div className="flex gap-3 items-center mb-2">
             <UsersIcon className="h-5 w-5 text-primary-600" />
-            <p className="text-lg text-primary-200">
+            <p className="text-lg text-primary-600">
               For up to <span className="font-bold">{maxCapacity}</span> guests
             </p>
           </div>
 
           <p className="flex gap-3 justify-end items-baseline">
-            {discount > 0 ? (
+            {discount && discount > 0 ? (
               <>
                 <span className="text-3xl font-[350]">
-                  ${regularPrice - discount}
+                  ${regularPrice && regularPrice - discount}
                 </span>
                 <span className="line-through font-semibold text-primary-600">
                   ${regularPrice}
@@ -47,7 +45,7 @@ function RoomCard({ room }: Props) {
           </p>
         </div>
 
-        <div className="bg-primary-950 border-t border-t-primary-800 text-right">
+        <div className=" border-t border-t-primary-800 text-right">
           <a
             href={`/rooms/${id}`}
             className="border-l border-primary-800 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-primary-900"
