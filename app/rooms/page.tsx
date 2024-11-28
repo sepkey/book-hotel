@@ -1,17 +1,12 @@
-import RoomCard from "@/_components/RoomCard";
-import { Room } from "../_types";
+import { Suspense } from "react";
+import RoomsList from "../_components/RoomsList";
+import Spinner from "../_components/Spinner";
 
 export const metadata = {
   title: "rooms",
 };
 
-export default async function Page() {
-  // CHANGE
-  const res = await fetch("http://localhost:3000/api/rooms", {
-    cache: "no-cache",
-  });
-  const rooms = (await res.json()) as Room[];
-
+export default function Page() {
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -26,13 +21,9 @@ export default async function Page() {
         Welcome to paradise.
       </p>
 
-      {rooms.length > 0 && (
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14">
-          {rooms.map((room) => (
-            <RoomCard room={room} key={room.id} />
-          ))}
-        </div>
-      )}
+      <Suspense fallback={<Spinner />}>
+        <RoomsList />
+      </Suspense>
     </div>
   );
 }
