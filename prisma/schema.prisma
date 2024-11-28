@@ -12,7 +12,7 @@ model Room {
   created_at   DateTime  @default(now())
   name         String    @unique
   maxCapacity  Int?      @default(1)
-  reqularPrice Float?    @default(0)
+  regularPrice Float?    @default(0)
   discount     Int?      @default(0)
   description  String?   @default("")
   image        String?   @default("")

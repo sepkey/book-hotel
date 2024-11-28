@@ -7,7 +7,6 @@ type Props = { room: Room };
 
 function RoomCard({ room }: Props) {
   const { id, name, maxCapacity, regularPrice, discount, image } = room;
-
   return (
     <div className="flex border-primary-300 border">
       <div className="flex-1 relative">
