@@ -20,9 +20,18 @@ export default async function RoomPage({ params }: Props) {
     cache: "no-cache",
   });
 
+  console.log(res, "ioj");
+
   if (!res.ok) {
-    throw Error("There was an error in fetching data.");
+    // throw Error(
+    //   `There was an error in fetching data.
+    //   ${res.status}:${res.statusText}`
+    // );
+    console.log(`There was an error in fetching data.
+        ${res.status}:${res.statusText}`);
+    notFound();
   }
+
   const room = (await res.json()) as Room;
 
   const { name, image, description, maxCapacity } = room;
@@ -81,3 +90,4 @@ export default async function RoomPage({ params }: Props) {
 }
 
 import Image from "next/image";
+import { notFound } from "next/navigation";
