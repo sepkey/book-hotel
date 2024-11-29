@@ -5,13 +5,24 @@ type Props = {
   params: { roomId: string };
 };
 
+export async function generateMetadata({ params }: Props) {
+  const res = await fetch(`http://localhost:3000/api/rooms/${params.roomId}`, {
+    cache: "no-cache",
+  });
+  const { name } = (await res.json()) as Room;
+
+  return { title: `Room ${name}` };
+}
+
+// export const metadata = {
+//   title: "Room",
+// };
+
 export default async function RoomPage({ params }: Props) {
   // TODO: change to db
   const res = await fetch(`http://localhost:3000/api/rooms/${params.roomId}`, {
     cache: "no-cache",
   });
-
-  console.log(res);
 
   const room = (await res.json()) as Room;
   const { name, image, description, maxCapacity } = room;
