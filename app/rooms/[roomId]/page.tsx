@@ -14,20 +14,19 @@ export async function generateMetadata({ params }: Props) {
   return { title: `Room ${name}` };
 }
 
-// export const metadata = {
-//   title: "Room",
-// };
-
 export default async function RoomPage({ params }: Props) {
   // TODO: change to db
   const res = await fetch(`http://localhost:3000/api/rooms/${params.roomId}`, {
     cache: "no-cache",
   });
 
+  if (!res.ok) {
+    throw Error("There was an error in fetching data.");
+  }
   const room = (await res.json()) as Room;
+
   const { name, image, description, maxCapacity } = room;
 
-  console.log(room);
   return (
     <div className="max-w-6xl mx-auto mt-8">
       <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
