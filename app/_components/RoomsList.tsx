@@ -3,9 +3,7 @@ import RoomCard from "./RoomCard";
 
 export default async function RoomsList() {
   //TODO: change to db
-  const res = await fetch("http://localhost:3000/api/rooms", {
-    cache: "no-cache",
-  });
+  const res = await fetch("http://localhost:3000/api/rooms");
 
   if (!res.ok) {
     throw Error("There was an error in fetching data.");
