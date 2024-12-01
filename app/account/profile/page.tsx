@@ -1,4 +1,5 @@
 import SelectCountry from "@/_components/SeleceCountry";
+import Image from "next/image";
 
 export const metadata = {
   title: "profile",
@@ -40,10 +41,11 @@ export default function Page() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <label htmlFor="nationality">Where are you from?</label>
-            <img
+            <Image
               src={countryFlag}
               alt="Country flag"
               className="h-5 rounded-sm"
+              fill
             />
           </div>
 

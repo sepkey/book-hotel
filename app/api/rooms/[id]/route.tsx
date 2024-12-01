@@ -39,7 +39,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
       discount: body.discount,
       image: body.image,
       maxCapacity: body.maxCapacity,
-      requlaarPrice: body.requlaarPrice,
+      regularPrice: body.regularPrice,
     },
   });
 

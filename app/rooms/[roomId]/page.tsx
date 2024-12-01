@@ -5,22 +5,40 @@ type Props = {
   params: { roomId: string };
 };
 
+export async function generateMetadata({ params }: Props) {
+  const res = await fetch(`http://localhost:3000/api/rooms/${params.roomId}`, {
+    cache: "no-cache",
+  });
+  const { name } = (await res.json()) as Room;
+
+  return { title: `Room ${name}` };
+}
+
 export default async function RoomPage({ params }: Props) {
   // TODO: change to db
   const res = await fetch(`http://localhost:3000/api/rooms/${params.roomId}`, {
     cache: "no-cache",
   });
 
-  console.log(res);
+  if (!res.ok) {
+    // throw Error(
+    //   `There was an error in fetching data.
+    //   ${res.status}:${res.statusText}`
+    // );
+    console.log(`There was an error in fetching data.
+        ${res.status}:${res.statusText}`);
+    notFound();
+  }
 
   const room = (await res.json()) as Room;
+
   const { name, image, description, maxCapacity } = room;
 
-  console.log(room);
   return (
     <div className="max-w-6xl mx-auto mt-8">
       <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
-        <div className="relative scale-[1.15] -translate-x-3">
+        {/* <div className="relative scale-[1.15] -translate-x-3"> */}
+        <div className="relative ">
           <Image
             src={image!}
             fill
@@ -30,7 +48,8 @@ export default async function RoomPage({ params }: Props) {
         </div>
 
         <div>
-          <h3 className="text-accent-200 font-black text-7xl mb-5 translate-x-[-254px]  p-6 pb-1 w-[150%]">
+          {/* <h3 className="text-accent-200 font-black text-7xl mb-5 translate-x-[-254px]  p-6 pb-1 w-[150%]"> */}
+          <h3 className="text-accent-200 font-black text-7xl mb-5   p-6 pb-1 w-[150%]">
             Room: {name}
           </h3>
 
@@ -62,12 +81,13 @@ export default async function RoomPage({ params }: Props) {
       </div>
 
       <div>
-        <h2 className="text-5xl font-semibold text-center">
+        <h3 className="text-5xl font-semibold text-center">
           Reserve today. Pay on arrival.
-        </h2>
+        </h3>
       </div>
     </div>
   );
 }
 
 import Image from "next/image";
+import { notFound } from "next/navigation";
