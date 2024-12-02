@@ -14,6 +14,17 @@ export async function generateMetadata({ params }: Props) {
   return { title: `Room ${name}` };
 }
 
+export async function generateStaticParams() {
+  const res = await fetch("http://localhost:3000/api/rooms");
+  const rooms = (await res.json()) as Room[];
+  const ids = rooms.map((room) => ({
+    roomId: room.id.toString(),
+  }));
+
+  console.log(ids);
+  return ids;
+}
+
 export default async function RoomPage({ params }: Props) {
   // TODO: change to db
   const res = await fetch(`http://localhost:3000/api/rooms/${params.roomId}`, {
