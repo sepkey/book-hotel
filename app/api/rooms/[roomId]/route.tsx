@@ -4,12 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 import schema from "../schema";
 
 type Props = {
-  params: { id: string };
+  params: { roomId: string };
 };
 
 export async function GET(request: NextRequest, { params }: Props) {
   const room = await prisma.room.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: parseInt(params.roomId) },
   });
   if (!room)
     return NextResponse.json({ error: "Room not found" }, { status: 404 });
@@ -23,7 +23,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
     return NextResponse.json(validation.error.errors, { status: 400 });
 
   const room = await prisma.room.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: parseInt(params.roomId) },
   });
 
   if (!room)
@@ -48,13 +48,13 @@ export async function PUT(request: NextRequest, { params }: Props) {
 
 export async function DELETE(request: NextRequest, { params }: Props) {
   const room = await prisma.room.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: parseInt(params.roomId) },
   });
 
   if (!room)
     return NextResponse.json({ error: "The room not found." }, { status: 404 });
 
-  await prisma.room.delete({ where: { id: parseInt(params.id) } });
+  await prisma.room.delete({ where: { id: parseInt(params.roomId) } });
 
   return NextResponse.json({});
 }
