@@ -1,54 +1,41 @@
-import { Room } from "@/app/_types";
+import prisma from "@/prisma/client";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { roomId: string };
 };
 
 export async function generateMetadata({ params }: Props) {
-  const res = await fetch(`http://localhost:3000/api/rooms/${params.roomId}`, {
-    cache: "no-cache",
+  const room = await prisma.room.findUnique({
+    where: { id: parseInt(params.roomId) },
   });
-  const { name } = (await res.json()) as Room;
 
-  return { title: `Room ${name}` };
+  return { title: `Room ${room?.name}` };
 }
 
 export async function generateStaticParams() {
-  const res = await fetch("http://localhost:3000/api/rooms");
-  const rooms = (await res.json()) as Room[];
-  const ids = rooms.map((room) => ({
-    roomId: room.id.toString(),
-  }));
-
+  const rooms = await prisma.room.findMany();
+  const ids = rooms.map((room) => ({ roomId: room.id.toString() }));
   console.log(ids);
   return ids;
 }
 
 export default async function RoomPage({ params }: Props) {
-  // TODO: change to db
-  const res = await fetch(`http://localhost:3000/api/rooms/${params.roomId}`, {
-    cache: "no-cache",
+  const room = await prisma.room.findUnique({
+    where: { id: parseInt(params.roomId) },
   });
 
-  if (!res.ok) {
-    // throw Error(
-    //   `There was an error in fetching data.
-    //   ${res.status}:${res.statusText}`
-    // );
-    console.log(`There was an error in fetching data.
-        ${res.status}:${res.statusText}`);
+  if (!room) {
     notFound();
   }
-
-  const room = (await res.json()) as Room;
 
   const { name, image, description, maxCapacity } = room;
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
       <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
-        {/* <div className="relative scale-[1.15] -translate-x-3"> */}
         <div className="relative ">
           <Image
             src={image!}
@@ -59,7 +46,6 @@ export default async function RoomPage({ params }: Props) {
         </div>
 
         <div>
-          {/* <h3 className="text-accent-200 font-black text-7xl mb-5 translate-x-[-254px]  p-6 pb-1 w-[150%]"> */}
           <h3 className="text-accent-200 font-black text-7xl mb-5   p-6 pb-1 w-[150%]">
             Room: {name}
           </h3>
@@ -99,6 +85,3 @@ export default async function RoomPage({ params }: Props) {
     </div>
   );
 }
-
-import Image from "next/image";
-import { notFound } from "next/navigation";

@@ -1,7 +1,7 @@
 import { TrashIcon } from "@heroicons/react/24/solid";
 
 type Props = {
-  bookingId: string;
+  bookingId: string | number;
 };
 
 function DeleteReservation({}: Props) {

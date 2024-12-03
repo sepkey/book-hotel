@@ -1,14 +1,8 @@
-import { Room } from "@/_types/index";
+import prisma from "@/prisma/client";
 import RoomCard from "./RoomCard";
 
 export default async function RoomsList() {
-  //TODO: change to db
-  const res = await fetch("http://localhost:3000/api/rooms");
-
-  if (!res.ok) {
-    throw Error("There was an error in fetching data.");
-  }
-  const rooms = (await res.json()) as Room[];
+  const rooms = await prisma.room.findMany();
 
   if (!rooms.length) return null;
 

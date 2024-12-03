@@ -1,5 +1,5 @@
-import { Room } from "@/_types/index";
 import { UsersIcon } from "@heroicons/react/24/solid";
+import { Room } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
