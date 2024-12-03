@@ -1,5 +1,5 @@
 import ReservationCard from "@/_components/ReservationCard";
-import { Booking } from "@/app/_types";
+import { Booking } from "@prisma/client";
 
 export const metadata = {
   title: "reservations",
