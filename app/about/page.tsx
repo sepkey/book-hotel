@@ -1,14 +1,19 @@
+import prisma from "@/prisma/client";
 import image1 from "@/public/about-1.png";
 import image2 from "@/public/about-2.png";
 
 import Image from "next/image";
 import Link from "next/link";
 
+export const revalidate = 86400;
+
 export const metadata = {
   title: "about",
 };
 
-export default function Page() {
+export default async function Page() {
+  const rooms = await prisma.room.findMany();
+
   return (
     <div className="grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center">
       <div className="col-span-3">
@@ -22,7 +27,8 @@ export default function Page() {
             Hidden away in the heart of the Italian Dolomites, this is your
             paradise away from home. But it&apos;s not just about the luxury
             rooms. It&apos;s about the experience of reconnecting with nature
-            and enjoying simple pleasures with family.
+            and enjoying simple pleasures with family. Our {rooms.length} luxury
+            rooms provide a cozy base, but the real freedom and peace.
           </p>
         </div>
       </div>
