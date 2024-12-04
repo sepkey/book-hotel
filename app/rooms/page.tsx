@@ -2,6 +2,10 @@ import { Suspense } from "react";
 import RoomsList from "../_components/RoomsList";
 import Spinner from "../_components/Spinner";
 
+// export const revalidate = 0; // fully dynamic
+export const revalidate = 3600; //makes sense
+// export const revalidate = 15; //test ISR
+
 export const metadata = {
   title: "rooms",
 };

@@ -1,7 +1,9 @@
 import prisma from "@/prisma/client";
+// import { unstable_noStore as noStore } from "next/cache";
 import RoomCard from "./RoomCard";
 
 export default async function RoomsList() {
+  // noStore(); //useful for partial pre rendering
   const rooms = await prisma.room.findMany();
 
   if (!rooms.length) return null;
