@@ -36,7 +36,7 @@ export default async function RoomPage({ params }: Props) {
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
-      <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
+      <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800  p-10 mb-24">
         <div className="relative ">
           <Image
             src={image!}
@@ -47,7 +47,7 @@ export default async function RoomPage({ params }: Props) {
         </div>
 
         <div>
-          <h3 className="text-accent-200 font-black text-7xl mb-5   p-6 pb-1 w-[150%]">
+          <h3 className="text-accent-200 font-black text-7xl w-96">
             Room: {name}
           </h3>
 
